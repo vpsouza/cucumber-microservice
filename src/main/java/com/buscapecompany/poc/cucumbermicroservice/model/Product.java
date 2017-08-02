@@ -17,15 +17,19 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity
 @JsonIgnoreProperties(ignoreUnknown = true, value = {"handler", "hibernateLazyInitializer"})
 public class Product {
 
 	@Id
 	@GeneratedValue
+	@ApiModelProperty(required=true)
 	private Long id;
 	
 	@Column
+	@ApiModelProperty(required=true)
 	private String name;
 	
 	@Column

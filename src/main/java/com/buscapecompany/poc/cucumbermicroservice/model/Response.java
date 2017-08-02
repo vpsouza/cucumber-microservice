@@ -1,8 +1,12 @@
 package com.buscapecompany.poc.cucumbermicroservice.model;
 
+import io.swagger.annotations.ApiModelProperty;
+
 public class Response {
 
+	@ApiModelProperty(value = "HTTP Status Code")
 	private int status;
+	@ApiModelProperty(value = "HTTP Message")
 	private String message;
 
 	public Response() {

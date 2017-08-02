@@ -24,8 +24,14 @@ import com.buscapecompany.poc.cucumbermicroservice.repository.ProductRepository;
 import com.buscapecompany.poc.cucumbermicroservice.validation.ProductValidation;
 import com.buscapecompany.poc.cucumbermicroservice.validation.ValidationResult;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping("/products")
+@Api(value="products")
 public class ProductController {
 
 	private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
@@ -34,12 +40,17 @@ public class ProductController {
 	private ProductRepository repository;
 
 	@GetMapping
+	@ApiOperation(value = "View a sumarized list of available products", nickname = "getAllSumarized")
 	public ResponseEntity<List<Product>> getAllSumarized() {
 		logger.info("returning all summarized products...");
 
 		return new ResponseEntity<List<Product>>(repository.findByParentIsNull(), HttpStatus.OK);
 	}
 
+	@ApiOperation(value = "View a sumarized availble product", nickname = "findOneSumarized")
+	@ApiImplicitParams({
+        @ApiImplicitParam(name = "id", value = "Product Id", required = false, dataType = "long", paramType = "query")
+      })
 	@GetMapping("/{id:.+}")
 	public ResponseEntity<Product> findOneSumarized(@PathVariable("id") long id) throws ProductException {
 		logger.info("returning a summarized product by id...");
@@ -54,6 +65,10 @@ public class ProductController {
 		return new ResponseEntity<Product>(product, HttpStatus.OK);
 	}
 
+	@ApiOperation(value = "View a list of childs of an availble product", nickname = "getChildsById")
+	@ApiImplicitParams({
+        @ApiImplicitParam(name = "id", value = "Product Id", required = false, dataType = "long", paramType = "query")
+      })
 	@GetMapping("/{id:.+}/children")
 	public ResponseEntity<List<Product>> getChildsById(@PathVariable("id") long id) throws ProductException {
 		logger.info("returning a product by id...");
@@ -68,6 +83,10 @@ public class ProductController {
 		return new ResponseEntity<List<Product>>(repository.findChildrenByParent(product), HttpStatus.OK);
 	}
 
+	@ApiOperation(value = "Delete a product", nickname = "delete")
+	@ApiImplicitParams({
+        @ApiImplicitParam(name = "id", value = "Product Id", required = false, dataType = "long", paramType = "query")
+      })
 	@DeleteMapping("/{id:.+}")
 	public ResponseEntity<Response> delete(@PathVariable("id") long id) throws ProductException {
 		logger.info("deleting a product by id...");
@@ -85,6 +104,7 @@ public class ProductController {
 				HttpStatus.OK);
 	}
 
+	@ApiOperation(value = "Create a new product", nickname = "save")
 	@PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Product> save(@RequestBody Product payload) throws ProductException {
 		logger.info("product to save " + payload);
@@ -106,6 +126,7 @@ public class ProductController {
 		}
 	}
 
+	@ApiOperation(value = "Update an availble product", nickname = "update")
 	@PatchMapping
 	public ResponseEntity<Product> update(@RequestBody Product payload) throws ProductException {
 		logger.info("product to update " + payload);
