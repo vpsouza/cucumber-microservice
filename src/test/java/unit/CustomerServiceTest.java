@@ -61,18 +61,20 @@ public class CustomerServiceTest {
 	
 	@Test
 	public void saveCustomer(){
-		Customer Customer = new Customer(8l, "Customer 8", "Customer Sample 8", null);
+		Customer Customer = new Customer(8l, "CUstomer1", "CUstomer1", "CUstomer1", 99);
 		when(repository.save(Customer)).thenReturn(Customer);
 		Customer result = service.save(Customer);
 		assertEquals(true, new Long(8).equals(result.getId()));
-		assertEquals("Customer 8", result.getName());
-		assertEquals("Customer Sample 8", result.getDescription());
+		assertEquals("CUstomer1", result.getFirstName());
+		assertEquals("CUstomer1", result.getSurName());
+		assertEquals("CUstomer1", result.getLastName());
+		assertEquals(true, new Integer(99).equals(result.getAge()));
 	}
 	
 	@Test
 	public void removeCustomer(){
-		Customer Customer = new Customer(8l, "Customer 8", "Customer Sample 8", null);
+		Customer Customer = new Customer(8l, "CUstomer1", "CUstomer1", "CUstomer1", 99);
 		service.delete(Customer);
-        verify(CustomerRepository, times(1)).delete(Customer);
+        verify(repository, times(1)).delete(Customer);
 	}
 }
