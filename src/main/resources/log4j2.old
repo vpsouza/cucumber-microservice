@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="OFF" packages="org.graylog2.log4j2">
+    <Appenders>
+        <GELF name="gelfAppender" server="localhost" port="12201" hostName="springboot.example.com">
+            <PatternLayout pattern="%logger{36} - %msg%n\\0"/>
+            <!-- Additional fields -->
+            <KeyValuePair key="foo" value="bar"/>
+            <KeyValuePair key="jvm" value="${java:vm}"/>                
+        </GELF>
+    </Appenders>
+    <Loggers>
+        <Root level="info">
+            <AppenderRef ref="gelfAppender"/>
+        </Root>
+    </Loggers>
+</Configuration>

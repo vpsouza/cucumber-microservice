@@ -44,6 +44,12 @@
 		</dependency>
 
 		<dependency>
+		    <groupId>biz.paluch.logging</groupId>
+		    <artifactId>logstash-gelf</artifactId>
+		    <version>x.y.z</version>
+		</dependency>
+
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 			<scope>runtime</scope>
@@ -118,6 +124,17 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
+	
+	<repositories>
+        <repository>
+            <id>spring-snapshots</id>
+            <name>Spring Snapshots</name>
+            <url>http://maven.entwinemedia.com/content/repositories/releases/</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 
 	<build>
 		<testResources>

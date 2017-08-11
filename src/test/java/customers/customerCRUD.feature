@@ -12,23 +12,14 @@ Scenario: fetch some customers
 	
 Scenario: add a customer, update it and then delete it
 
-	Given path 'customers'
-	And request {firstName: 'Vinicius', surName: 'Piedade', lastName: 'de Souza', age: 31}
-	When method post
-	Then status 200
-	And match response contains { id: '#number', firstName: 'Vinicius', surName: 'Piedade', lastName: 'de Souza', age: 31}
-	And def newCustomer = response
+	def newCustomerPayload = {firstName: 'Vinicius', surName: 'Piedade', lastName: 'de Souza', age: 31}
+	def newCustomer = call read('addCustomer.feature') {payload: newCustomerPayload}
+	match newCustomer contains { id: '#number', firstName: 'Vinicius', surName: 'Piedade', lastName: 'de Souza', age: 31}
 
-	Given path 'customers'
-	And set newCustomer.firstName = 'Michel'
-	And set newCustomer.surName = null
-	And set newCustomer.lastName = 'Temer'
-	And request newCustomer
-	When method patch
-	Then status 200
-	And match response contains {firstName: 'Michel', surName: '#null', lastName: 'Temer'}
-	And def idToBeDeleted = response.id
+	set newCustomer.firstName = 'Michel'
+	set newCustomer.surName = null
+	set newCustomer.lastName = 'Temer'
+	def patchCustomerResult = call read('updateCustomer.feature') newCustomer
+	match patchCustomerResult contains {firstName: 'Michel', surName: '#null', lastName: 'Temer'}
 	
-	Given path 'customers', idToBeDeleted
-	When method delete
-	Then status 200
+	def resultDelete = call read('deleteCustomer.feature') patchCustomerResult

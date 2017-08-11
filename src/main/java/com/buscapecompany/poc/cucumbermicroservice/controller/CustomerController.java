@@ -34,6 +34,11 @@ public class CustomerController {
 	@GetMapping
 	@ApiOperation(value = "View a list of available customers", nickname = "findAll")
 	public ResponseEntity<List<Customer>> findAll(){
+		logger.info("View a list of available customers");
+		logger.debug ("View a list of available customers");
+		logger.error("View a list of available customers");
+		logger.trace ("View a list of available customers");
+		logger.warn("View a list of available customers");
 		return new ResponseEntity<List<Customer>>(new ArrayList<Customer>(), HttpStatus.OK);
 	}
 	

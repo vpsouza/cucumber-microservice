@@ -55,6 +55,10 @@ public class CucumberMicroserviceApplication {
 			});
 
 			logger.info("The sample data has been generated");
+			logger.debug("The sample data has been generated");
+			logger.error("The sample data has been generated");
+			logger.trace("The sample data has been generated");
+			logger.warn("The sample data has been generated");
 		};
 	}
 
